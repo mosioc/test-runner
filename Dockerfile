@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
 
 # install test frameworks
 RUN npm install -g jest@29 \
-    && pip3 install pytest pytest-html pytest-json-report --break-system-packages
+    && pip3 install --upgrade pip \
+    && pip3 install pytest pytest-html pytest-json-reports
 
 # create test runner script directory
 WORKDIR /runner
