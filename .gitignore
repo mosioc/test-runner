@@ -1,0 +1,24 @@
+# node
+node_modules/
+package-lock.json
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+htmlcov/
+.coverage
+
+# go
+*.exe
+*.test
+*.out
+
+# reports
+reports/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
