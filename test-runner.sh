@@ -97,12 +97,11 @@ run_pytest() {
     # install requirements if they exist
     if [ -f "requirements.txt" ]; then
         print_status "Installing Python dependencies..."
-        pip3 install -r requirements.txt --break-system-packages
+        pip3 install -r requirements.txt
     fi
     
-    # run tests with JSON and HTML reports
+    # run tests with HTML reports
     if python3 -m pytest \
-        --json-report --json-report-file=/tmp/report.json \
         --html=/tmp/pytest-report.html --self-contained-html \
         -v 2>&1 | tee /tmp/pytest-output.log; then
         print_success "Pytest tests passed!"
@@ -166,19 +165,15 @@ EOF
         cat "/tmp/${framework}-output.log" >> /tmp/test-report.txt
     fi
     
-    # handle pytest JSON report with correct filename
-    if [ "$framework" = "pytest" ] && [ -f "/tmp/report.json" ]; then
-        cp "/tmp/report.json" "/tmp/pytest-results.json"
-    fi
-    
     # display report
     cat /tmp/test-report.txt
     
     # save reports to output directory if mounted
     if [ -d "/output" ] && [ -w "/output" ]; then
         cp /tmp/test-report.txt /output/ 2>/dev/null || print_warning "Could not write test-report.txt to /output"
-        [ -f "/tmp/${framework}-results.json" ] && cp "/tmp/${framework}-results.json" /output/ 2>/dev/null
+        [ -f "/tmp/jest-results.json" ] && cp "/tmp/jest-results.json" /output/ 2>/dev/null
         [ -f "/tmp/pytest-report.html" ] && cp "/tmp/pytest-report.html" /output/ 2>/dev/null
+        [ -f "/tmp/gotest-output.log" ] && cp "/tmp/gotest-output.log" /output/gotest-results.log 2>/dev/null
         print_status "Reports saved to /output directory"
     elif [ ! -d "/output" ]; then
         print_status "No /output directory mounted, reports not saved"

@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 RUN npm install -g jest@latest --no-optional --silent 2>&1 | tail -1
 
 RUN pip3 install --upgrade pip setuptools wheel \
-    && pip3 install pytest pytest-html pytest-json-reports --no-cache-dir
+    && pip3 install pytest pytest-html --no-cache-dir
 
 # create test runner script directory
 WORKDIR /runner
